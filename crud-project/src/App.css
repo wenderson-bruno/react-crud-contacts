@@ -98,3 +98,46 @@ button:hover {
     margin-top: 10px;
     transition: 0.5s;
 }
+
+/* modal */
+.container-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 200px;
+    box-shadow: 1px 1px 4px black;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}   
+.modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    gap: 20px;
+    transform: scale(1);
+    transition: transform 0.5s ease;
+
+}
+.close-modal{
+    padding: 6px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(0, 96, 239);
+    color: white;
+}
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.hidden .modal {
+    transform: scale(0.8);
+}

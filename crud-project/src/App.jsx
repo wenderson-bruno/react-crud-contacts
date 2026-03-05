@@ -14,6 +14,7 @@ function App() {
   const [editItem, setEditItem] = useState(null)
   const [email, setEmail/* <-- função que muda o estado */] = useState('')
   const [phone, setPhone] = useState('')
+  const [modalClose, setModalClose] = useState(false)
 
   /* sessão de erros */
   const [error, setError] = useState('')
@@ -28,7 +29,7 @@ function App() {
   const add = () => {
     /* verifica se todos os campos estão preenchidos */
     if (text.trim() === '' || email.trim() === '' || phone.trim() === '') {
-      setError('o campo nome não pode ser vazio!')
+      setError('todos os campos não podem estar vazios!')
       return
     } else {
       setError('')
@@ -86,6 +87,8 @@ function App() {
     setText('')
     setEmail('')
     setPhone('')
+
+    setModalClose(true)
   }
 
 
@@ -119,7 +122,6 @@ function App() {
 
   return (
     <div className="containerInput">
-      <div className="containerInput">
         <div className="border">
         <h1 >Project crud</h1>
         <Form
@@ -137,9 +139,17 @@ function App() {
           onEdit={edit}
           onRemove={remove}
         />
+        
+        <div className={`container-modal ${modalClose ? "" : 'hidden'}`}> 
+          <div className="modal">
+           <img width="50" height="50" src="https://img.icons8.com/ios/50/008000/checked--v1.png" alt="checked--v1"/>
+            <p>cadastrado com sucesso!</p>
+            <button className="close-modal" onClick={() => setModalClose(false)}>Fechar</button>
+          </div>
+        </div>
+        
         </div>
       </div>
-    </div>
   )
 }
 
