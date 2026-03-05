@@ -1,35 +1,64 @@
 import { useState } from "react"
 import { useEffect } from "react"
+import Form from "./assets/form"
+import List from "./assets/list"
 import './App.css'
 
 function App() {
   /* onde declara as variaveis  */
-  const [text /* <-- Valor */, setText /* <-- Função */] = useState('')
-  const [list, setList] = useState([])
+  const [text /* <-- Valor */, setText /* <-- Função */] = useState('') /* <--estado */ /* o estado é qualquer valor criado com  -->[useState]<-- */
+  const [list, setList] = useState(() => {
+    const savedList = localStorage.getItem('list')
+    return savedList ? JSON.parse(savedList) : []
+  })
   const [editItem, setEditItem] = useState(null)
-  const [email, setEmail] = useState('')
+  const [email, setEmail/* <-- função que muda o estado */] = useState('')
   const [phone, setPhone] = useState('')
 
-  /* carrega a lista do localStorage */
-
-  useEffect(() => {
-    const savedList = localStorage.getItem('list')
-
-    if (savedList) {
-      setList(JSON.parse(savedList))
-    }
-  }, [])
+  /* sessão de erros */
+  const [error, setError] = useState('')
 
   /* salva a lista no localStorage */
   useEffect(() => {
-    if (list.length > 0) {
-      localStorage.setItem('list', JSON.stringify(list))
-    }
+    localStorage.setItem('list', JSON.stringify(list))
   }, [list])
+
 
   /* função de add */
   const add = () => {
-    if (text.trim() === '' || email.trim() === '' || phone.trim() === '') return
+    /* verifica se todos os campos estão preenchidos */
+    if (text.trim() === '' || email.trim() === '' || phone.trim() === '') {
+      setError('o campo nome não pode ser vazio!')
+      return
+    } else {
+      setError('')
+    }
+
+    const regex = /^[^\s]+@[^\s]+\.[^\s]+$/;
+
+    /* verifica o email */
+    if (!regex.test(email)) {
+      setError('Email inválido!')
+      return
+    } else {
+      setError('')
+    }
+
+    /* verifica o telefone */
+    if (phone.length < 10) {
+      setError('Telefone inválido!')
+      return
+    } else {
+      setError('')
+    }
+
+    /* verifica o nome  */
+    if (text.length < 3) {
+      setError('o numero de caracteres deve ser maior que 3!')
+      return
+    } else {
+      setError('')
+    }
 
     /* cria o novo item */
     const newItem = {
@@ -61,8 +90,13 @@ function App() {
 
 
   const remove = (IdRemove) => {
+    /* verifica se o usuário deseja realmente remover o item  */
+    const confirmRemove = window.confirm('tem certeza que deseja remover?')
+    if (!confirmRemove) return
+
     /* filtra a lista para remover o item com o índice especificado */
     const newList = list.filter((item) => item.id !== IdRemove)
+
     /* atualiza a lista */
     setList(newList)
   }
@@ -72,7 +106,7 @@ function App() {
     const item = list.find((item) => item.id === idEdit)
 
     /* se o item não for encontrado, retorna */
-    if(!item) return
+    if (!item) return
 
     /* preenche os campos com os valores do item a ser editado */
     setText(item.name)
@@ -83,42 +117,26 @@ function App() {
     setEditItem(idEdit)
   }
 
-
   return (
-    <div className="containerGeral"> {/* geral */}
-
+    <div className="containerInput">
       <div className="containerInput">
         <div className="border">
-          <h1>Project Crud</h1>
-          <input type="text" maxLength={40} placeholder="name" value={text} onChange={(e) => setText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                add()
-              }
-            }} />
-          <input type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="text" maxLength={11} placeholder="phone" value={phone} onChange={(e) => {
-            const onLyNumbers = e.target.value.replace(/\D/g, '')
-            setPhone(onLyNumbers)
-          }} />
-          <button className="register" onClick={add}>registrar</button>
-
-
-          {list.map((item, index) => (
-
-            <ul className="list" key={item.id}>
-              <div className="info">
-                <li>{item.name}</li>
-                <li>{item.email}</li>
-                <li>{item.phone}</li>
-              </div>
-              <div className="action">
-                <button className="btnEdit" onClick={() => edit(item.id)} >edit</button>
-                <button className="btnRemove" onClick={() => remove(item.id)} >remover</button>
-              </div>
-            </ul>
-
-          ))}
+        <h1 >Project crud</h1>
+        <Form
+          text={text}
+          setText={setText}
+          email={email}
+          setEmail={setEmail}
+          phone={phone}
+          setPhone={setPhone}
+          add={add}
+          error={error}
+        />
+        <List
+          list={list}
+          onEdit={edit}
+          onRemove={remove}
+        />
         </div>
       </div>
     </div>

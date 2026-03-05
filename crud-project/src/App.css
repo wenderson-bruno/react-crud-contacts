@@ -5,7 +5,6 @@
 
 body {
     background: linear-gradient(180deg, rgba(44, 44, 215, 0.769), rgb(114, 114, 218));
-
 }
 
 .containerInput {
@@ -22,6 +21,8 @@ body {
     background-color: aliceblue;
     padding: 10px;
     border-radius: 6px;
+    box-shadow: 1px 1px 3px black
+
 }
 
 .info {
@@ -71,6 +72,7 @@ input {
     padding: 6px;
     border-right: 1px solid black;
     border-radius: 2px;
+    box-shadow: 1px 1px 3px black
 }
 
 input:hover {
@@ -80,9 +82,19 @@ input:hover {
 button {
     padding: 6px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 button:hover {
     opacity: 0.9;
+}
+
+.msg-error{
+    text-align: center;
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+    text-shadow: 2px 2px 1px black;
+    margin-top: 10px;
+    transition: 0.5s;
 }
