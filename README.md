@@ -18,4 +18,4 @@ Bruno Wenderson
 
 ## Preview
 
-![preview](./crud-project/image/crud-project.png.png)
+![preview](./crud-project/image/preview.png)
