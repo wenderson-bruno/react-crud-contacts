@@ -1,14 +1,21 @@
-# react CRUD Contacts 
+# Form Validation Project
 
-Projeto CRUD feito em react com:
+A simple React project with form validation and success modal.
 
--useState <br>
--useEffect <br>
--localStorage <br>
--Id único
+## Technologies
+- React
+- CSS
+- JavaScript
 
-## Funcionalidades
--cria contato <br>
--edita contato <br>
--renove contato <br>
--Persistência no Navegador 
+## Features
+- Email validation
+- Phone validation
+- Error messages
+- Success modal
+
+## Author
+Bruno Wenderson
+
+## Preview
+
+![preview](./crud-project/image/crud-project.png.png)
